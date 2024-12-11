@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Class Schedule</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #4267b2, #3b5998);
+            color: white;
+            padding: 20px 0;
+            margin: 0;
+        }
+
+        .schedule-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .day {
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background: #e3f2fd;
+            padding: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .day h2 {
+            font-size: 1.2rem;
+            background: #64b5f6;
+            color: white;
+            padding: 5px;
+            margin: 0 0 10px;
+            border-radius: 5px;
+        }
+
+        .task {
+            margin: 10px 0;
+            padding: 10px;
+            background: #bbdefb;
+            border: 1px solid #90caf9;
+            border-radius: 5px;
+            cursor: grab;
+            text-align: left;
+        }
+
+        .task.dragging {
+            opacity: 0.5;
+        }
+
+        .day.highlight {
+            border-color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <h1>Class Schedule</h1>
+    <div class="schedule-container">
+        <div class="day" id="monday">
+            <h2>Monday</h2>
+            <div class="task" draggable="true">8:30-9:10: PE</div>
+            <div class="task" draggable="true">9:15-9:55: Chinese</div>
+            <div class="task" draggable="true">10:00-10:40: English</div>
+            <div class="task" draggable="true">10:45-11:25: TS</div>
+            <div class="task" draggable="true">12:30-13:10: English</div>
+            <div class="task" draggable="true">13:15-13:55: Math</div>
+            <div class="task" draggable="true">14:25-15:05: Art</div>
+        </div>
+        <div class="day" id="tuesday">
+            <h2>Tuesday</h2>
+            <div class="task" draggable="true">8:30-9:10: Math</div>
+            <div class="task" draggable="true">9:15-9:55: Chinese</div>
+            <div class="task" draggable="true">10:00-10:40: English</div>
+            <div class="task" draggable="true">10:45-11:25: English</div>
+            <div class="task" draggable="true">12:30-13:10: Music</div>
+            <div class="task" draggable="true">13:15-13:55: TS</div>
+            <div class="task" draggable="true">14:25-15:05: ICT</div>
+        </div>
+        <div class="day" id="wednesday">
+            <h2>Wednesday</h2>
+            <div class="task" draggable="true">8:30-9:10: Math</div>
+            <div class="task" draggable="true">9:15-9:55: English</div>
+            <div class="task" draggable="true">10:00-10:40: Chinese</div>
+            <div class="task" draggable="true">10:45-11:25: TS</div>
+            <div class="task" draggable="true">12:30-13:10: English</div>
+            <div class="task" draggable="true">13:15-13:55: Library</div>
+            <div class="task" draggable="true">14:25-15:05: Music</div>
+        </div>
+        <div class="day" id="thursday">
+            <h2>Thursday</h2>
+            <div class="task" draggable="true">8:30-9:10: Math</div>
+            <div class="task" draggable="true">9:15-9:55: English</div>
+            <div class="task" draggable="true">10:00-10:40: Chinese</div>
+            <div class="task" draggable="true">10:45-11:25: English</div>
+            <div class="task" draggable="true">12:30-13:10: Art</div>
+            <div class="task" draggable="true">13:15-13:55: TS</div>
+            <div class="task" draggable="true">14:25-15:05: PE</div>
+        </div>
+        <div class="day" id="friday">
+            <h2>Friday</h2>
+            <div class="task" draggable="true">8:30-9:10: Math</div>
+            <div class="task" draggable="true">9:15-9:55: English</div>
+            <div class="task" draggable="true">10:00-10:40: Chinese</div>
+            <div class="task" draggable="true">10:45-11:25: English</div>
+            <div class="task" draggable="true">12:30-13:10: PE</div>
+            <div class="task" draggable="true">13:15-13:55: TS</div>
+            <div class="task" draggable="true">14:25-15:05: Chinese</div>
+        </div>
+    </div>
+
+    <script>
+        // Drag and Drop Functionality
+        const tasks = document.querySelectorAll('.task');
+        const days = document.querySelectorAll('.day');
+
+        tasks.forEach(task => {
+            task.addEventListener('dragstart', () => {
+                task.classList.add('dragging');
+            });
+
+            task.addEventListener('dragend', () => {
+                task.classList.remove('dragging');
+            });
+        });
+
+        days.forEach(day => {
+            day.addEventListener('dragover', e => {
+                e.preventDefault();
+                const draggingTask = document.querySelector('.dragging');
+                day.appendChild(draggingTask);
+            });
+
+            day.addEventListener('dragenter', () => {
+                day.classList.add('highlight');
+            });
+
+            day.addEventListener('dragleave', () => {
+                day.classList.remove('highlight');
+            });
+
+            day.addEventListener('drop', () => {
+                day.classList.remove('highlight');
+            });
+        });
+    </script>
+</body>
+</html>
